@@ -23,8 +23,8 @@ def read_group_data(path):
 def draw_on_frame(drawing_frame, frame_group, prev_coords_on_frame):
     coords_from_frame = []
 
-    for prev_coord in prev_coords_on_frame:
-        cv2.circle(drawing_frame,(prev_coord[0], prev_coord[1]), 10, (255,0,0), -1)
+    #for prev_coord in prev_coords_on_frame:
+        #cv2.circle(drawing_frame,(prev_coord[0], prev_coord[1]), 10, (255,0,0), -1)
 
     for i, value in frame_group['Frame'].iteritems():
         bee_id = frame_group['BeeID'][i]
@@ -33,12 +33,12 @@ def draw_on_frame(drawing_frame, frame_group, prev_coords_on_frame):
         y_coord = int(frame_group['Y'][i])
         coords_from_frame.append((x_coord, y_coord))
         offset = 10
-        cv2.putText(drawing_frame, 
-                str(bee_id), #tag_type
+        cv2.putText(drawing_frame,
+                str(tag_type), #bee_id
                 (x_coord + offset, y_coord + offset),
                 cv2.FONT_HERSHEY_DUPLEX,
                 1, (255, 255, 255), 2)
-        cv2.circle(drawing_frame,(x_coord, y_coord), 25, (0,0,255), 2)
+        #cv2.circle(drawing_frame,(x_coord, y_coord), 25, (0,0,255), 2)
 
 
     return (drawing_frame, coords_from_frame)
@@ -58,7 +58,7 @@ def main():
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter('output.mp4v',fourcc, 25, (1536, 864))
-    
+
     all_prev_frames_coords = []
 
     while(cap.isOpened()):
@@ -78,7 +78,7 @@ def main():
         cv2.imshow('frame', small_frame)
         if frame_count % 10 == 0:
             out.write(small_frame)
-         
+
         if cv2.waitKey(50) & 0xFF == ord('q'):
             break
 
@@ -91,4 +91,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-        
